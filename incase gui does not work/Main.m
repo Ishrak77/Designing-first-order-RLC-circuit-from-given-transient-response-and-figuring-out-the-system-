@@ -1,0 +1,13 @@
+clear;
+close all;
+clc;
+format long;
+a = xlsread('Dataset_of_rc.xlsx');
+t = a(1,:);
+y = a(2,:);
+eqn = ["init*exp(-x/tau)" "A1*exp(s1*x)+A2*exp(s2*x)" "(A2+A1*x)*exp(-a*x)" "exp(-a*x)*(A1*cos(w*x)+A2*sin(w*x))"];
+[f,idx] = myplot(eqn,t,y);
+R = input('Value of Resistance :');
+[L,C,x] = findlc(f,idx,R);
+[xt,fun,tf]=define_signal();
+picture(xt,fun,R,L,C,x,tf);
